@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.0.8" provider-name="bigmong">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.22.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Curated movie/show widgets for Arctic Fuse, sourced from MDBList or your local library</summary>
+        <description lang="en_GB">
+            Live-resolves curated lists against your local Kodi library via JSON-RPC and
+            exposes each one as its own independently-addressable widget: exact-ordered
+            lists (Trending Movies, MCU chronological order, Star Wars order, Best Picture
+            Winners), a Trending Shows widget, and date-windowed ones (Christmas, Halloween,
+            Valentine's Day, May the 4th, Star Trek Day, Nick November, Friday the 13th)
+            that return empty outside their window so the skin's auto-hide takes care of
+            showing/hiding them. New lists can be added from the addon's own settings
+            screen (label, type, URL, optional window) without redeploying -- no Jellyfin
+            metadata is touched, no external cron job or file share is required.
+        </description>
+        <platform>all</platform>
+        <license>MIT</license>
+        <source>https://github.com/bigmong/plugin.video.mattflix.helper</source>
+    </extension>
+</addon>

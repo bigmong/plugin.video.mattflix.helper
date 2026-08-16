@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1">
+    <section id="mattflix.helper">
+        <category id="mdblist" label="32000">
+            <group id="1">
+                <setting id="mdblist_api_key" type="string" label="32011" help="32012">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32011</heading>
+                        <hidden>true</hidden>
+                    </control>
+                </setting>
+                <setting id="cache_hours" type="integer" label="32013" help="32014">
+                    <level>0</level>
+                    <default>12</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>72</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>true</popup>
+                    </control>
+                </setting>
+            </group>
+        </category>
+
+        <category id="lists" label="32001">
+            <group id="1" label="32002">
+                <setting id="local_list_item_limit" type="integer" label="32015" help="32016">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>50</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>true</popup>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="2" label="32003">
+                <setting id="custom_list_1_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_1_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_1_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="3" label="32004">
+                <setting id="custom_list_2_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_2_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_2_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="4" label="32005">
+                <setting id="custom_list_3_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_3_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_3_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="5" label="32006">
+                <setting id="custom_list_4_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_4_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_4_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="6" label="32007">
+                <setting id="custom_list_5_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_5_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_5_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="7" label="32008">
+                <setting id="custom_list_6_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_6_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_6_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="8" label="32009">
+                <setting id="custom_list_7_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_7_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_7_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+
+            <group id="9" label="32010">
+                <setting id="custom_list_8_label" type="string" label="32017" help="32018">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32017</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_8_type" type="string" label="32019" help="32020">
+                    <level>0</level>
+                    <default>movies</default>
+                    <constraints>
+                        <options>
+                            <option label="32023">movies</option>
+                            <option label="32024">shows</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string">
+                        <heading>32019</heading>
+                    </control>
+                </setting>
+                <setting id="custom_list_8_url" type="string" label="32021" help="32022">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32021</heading>
+                    </control>
+                </setting>
+            </group>
+        </category>
+
+        <category id="advanced" label="32025">
+            <group id="1">
+                <setting id="debug_logging" type="boolean" label="32026" help="32027">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
