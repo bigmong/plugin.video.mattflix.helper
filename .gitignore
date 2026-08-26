@@ -4,3 +4,7 @@
 secrets/
 *.log
 __pycache__/
+
+# Local design notes and plans for this repo live in
+# homelab-iac/notes/ (gitignored there) -- see notes/README.md.
+# Nothing of that kind should be created here.

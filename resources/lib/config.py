@@ -23,13 +23,19 @@ def detect_source(url: str) -> str:
     """Auto-detects how to resolve a list from its URL alone.
 
     "local://<field>/<value>" (e.g. "local://actor/Nicolas Cage", "local://genre/Horror")
-    queries the local Kodi library directly. Anything on mdblist.com uses the MDBList API.
-    imdb.com/themoviedb.org are recognized but not yet implemented -- reserved so those
+    queries the local Kodi library directly. "jellyfin://<collection>" resolves against the
+    Jellyfin server the box is already logged into. Anything on mdblist.com uses the MDBList
+    API. imdb.com/themoviedb.org are recognized but not yet implemented -- reserved so those
     can be dropped in as list sources later without changing this schema again.
+
+    Anything returning a source that render_list() doesn't implement yet renders as an empty
+    list rather than erroring, which is what makes a reserved scheme safe to ship early.
     """
     url_lower = url.lower()
     if url_lower.startswith("local://"):
         return "local"
+    if url_lower.startswith("jellyfin://"):
+        return "jellyfin"  # reserved, not yet implemented -- see "Want to Watch" below
     if "mdblist.com" in url_lower:
         return "mdblist"
     if "imdb.com" in url_lower:
@@ -45,6 +51,19 @@ def parse_local_url(url: str) -> tuple[str, str]:
     body = url[len("local://"):]
     field, _, value = body.partition("/")
     return field, value
+
+
+def parse_jellyfin_url(url: str) -> tuple[str, str]:
+    """Parses "jellyfin://<collection>/<kind>" -> (collection, kind).
+
+    e.g. "jellyfin://favorites/movies" -> ("favorites", "movies"). The kind segment is
+    optional and comes back "" when absent, in which case the caller falls back to the
+    entry's own "type" -- the two must agree, and "type" is the one that picks the render
+    path, so it wins by being the fallback rather than the override.
+    """
+    body = url[len("jellyfin://"):].split("?", 1)[0]
+    collection, _, kind = body.partition("/")
+    return collection.strip().lower(), kind.strip().strip("/").lower()
 
 
 def parse_limit(url: str) -> int | None:
@@ -69,6 +88,29 @@ def parse_limit(url: str) -> int | None:
 # Always active -- no "window" here; that's what SEASONAL_CONFIGS below is for.
 # -----------------------------------------------------------------------------
 LIST_CONFIGS: list[dict[str, Any]] = [
+    # "Want to Watch" -- the per-user queue backed by Jellyfin's IsFavorite flag. Split into
+    # two widgets (movies / shows) rather than one mixed list, matching Trending Movies /
+    # Trending Shows: each gets its own shelf in the skin, and each renders through the
+    # matching content type instead of forcing a single one onto a mixed list.
+    #
+    # PLACEHOLDER: the jellyfin source is not implemented, so both deliberately render as
+    # empty lists today. They ship early so each widget has a stable address to point a skin
+    # at before the backing code lands -- keys derive from the labels via slugify(), so
+    # DON'T rename a label without re-pointing the skin. Being empty and always-active, a
+    # skin's auto-hide keeps them off screen until they actually have content.
+    #
+    # The URL's trailing segment must agree with "type" -- it's what tells the (unwritten)
+    # jellyfin resolver which IncludeItemTypes to ask for.
+    {
+        "label": "Want to Watch Movies",  # -> ?list=want_to_watch_movies
+        "type": "movies",
+        "url": "jellyfin://favorites/movies",
+    },
+    {
+        "label": "Want to Watch Shows",  # -> ?list=want_to_watch_shows
+        "type": "shows",
+        "url": "jellyfin://favorites/shows",
+    },
     {
         "label": "Trending Movies",
         "type": "movies",
