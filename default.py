@@ -338,17 +338,23 @@ def group_movies_into_sets(movies: list[dict]) -> list[dict]:
     position of its first member, so whatever the list was sorted by still governs order.
     """
     counts: dict[int, int] = {}
+    latest_year: dict[int, int] = {}
     for movie in movies:
         setid = int(movie.get("setid") or 0)
         if setid:
             counts[setid] = counts.get(setid, 0) + 1
+            # Kodi dates a collection by its most recent entry -- verified against the
+            # box: Blair Witch (1999, 2016) reports 2016, Blue Lagoon (1980, 1991) 1991.
+            # Taken over the members present in THIS list rather than the whole library,
+            # so a filtered list dates its collections by what it actually contains.
+            latest_year[setid] = max(latest_year.get(setid, 0), int(movie.get("year") or 0))
 
     groupable = {setid for setid, count in counts.items() if count > 1}
     if not groupable:
         return movies
 
     art_by_set = {}
-    result = _jsonrpc("VideoLibrary.GetMovieSets", {"properties": ["title", "art", "playcount"]})
+    result = _jsonrpc("VideoLibrary.GetMovieSets", {"properties": ["title", "art", "playcount", "plot"]})
     for movie_set in result.get("sets", []):
         art_by_set[movie_set["setid"]] = movie_set
 
@@ -369,6 +375,8 @@ def group_movies_into_sets(movies: list[dict]) -> list[dict]:
             # Fall back to the movie's own "set" label if GetMovieSets didn't return it.
             "title": details.get("title") or movie.get("set") or "Collection",
             "art": details.get("art") or {},
+            "plot": details.get("plot") or "",
+            "year": latest_year.get(setid, 0),
             "movie_count": counts[setid],
         })
     return grouped
@@ -495,6 +503,13 @@ def add_set_item(info: dict) -> None:
     vtag.setTitle(info["title"])
     vtag.setMediaType("set")  # Kodi's media type for a collection
     vtag.setDbId(info["kodi_id"])
+    # Art alone was reaching the skin and no text with it. A native collection carries a
+    # year and a plot (premiered is empty on those too, so it is not the culprit here as
+    # it was for movies and shows); ours carried neither, so there was nothing to draw.
+    if info.get("year"):
+        vtag.setYear(info["year"])
+    if info.get("plot"):
+        vtag.setPlot(info["plot"])
     if info.get("art"):
         li.setArt(info["art"])
     # Skins show the member count on a set the same way they show episode counts on a show.

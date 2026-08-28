@@ -1,3 +1,8 @@
+v2.6.2 (2026-08-28)
+- Fixed: movie collections showed their artwork but no text. A collection built by Kodi
+  carries a year (that of its most recent entry) and a plot; the ones this addon built
+  carried neither, so the skin had nothing to write under the poster.
+
 v2.6.1 (2026-08-28)
 - Fixed: widget items showed no release date. Movies and shows both carried a correct
   year, but the skin draws the date from the "premiered" field, which this addon never
