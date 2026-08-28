@@ -1,3 +1,48 @@
+v2.6.0 (2026-08-28)
+- Added built-in Library Lists: All Movies, All Shows, New Movies, New Shows, Random
+  Movies, Random Shows, Top Rated Movies and Top Rated Shows, each addressable as
+  ?list=<key> and each switchable from settings. These are the smart playlists
+  re-expressed as live library queries -- same rules and same ordering, but rendered by
+  this addon, so unlike an .xsp widget they carry watched status, resume points and the
+  Want to Watch star.
+- Movie collections now group into a single entry the way Kodi's own Movies node does. A
+  collection with only one film in the result is left as the film, so you never open a
+  folder to find one thing.
+- Added the Want to Watch star to every other widget: anything on your Jellyfin
+  favourites is marked wherever it appears. It uses the skin's existing favourite
+  indicator, so there is nothing to configure -- Arctic Fuse's own "Trakt favourites"
+  indicator toggle switches it on and off. It only works on widgets this addon builds;
+  Kodi's native library views cannot be marked by any addon, which is why the smart
+  playlists were reimplemented as Library Lists above.
+- Every built-in list now has its own on/off toggle in settings -- 7 lists, 7 seasonals
+  and 8 library lists, in three categories. Switching one off hides it from the widget
+  picker and the addon's menu; switching off a seasonal also drops it from the combined
+  Seasonals rotation, so that widget falls through to the next active holiday instead of
+  showing nothing. A toggle an older install has never seen reads as on, so upgrading
+  cannot silently lose a list.
+- The addon's own menu is now grouped by where a list comes from (Library, MDBList, Want
+  to Watch, Seasonals, Custom) rather than one long flat list. Empty groups are hidden.
+- Much faster widget refreshes. Every widget used to read the whole movie or TV library
+  twice: once to match the list, and once more to work out which items get the Want to
+  Watch star. The star is now decided from ids the items already carry, so that second
+  read is gone entirely -- a Library List widget is a single library query where it used
+  to be two full reads of everything you own, and the lists that do need matching read
+  the library once instead of twice.
+- Fixed: a failed MDBList fetch is no longer written to the cache. A single timeout used
+  to be stored as an empty list with a fresh timestamp, which left that widget empty for
+  the full cache duration -- 12 hours by default. A failed refresh now keeps serving the
+  previous copy instead.
+- Fixed: a failed Jellyfin call no longer suppresses the Want to Watch star for a minute.
+  It was cached as "nothing is favourited"; "could not tell" and "nothing there" are now
+  different answers.
+- Fixed: the addon declared it ran on Kodi 19, then used Kodi 20+ APIs. It now declares
+  Kodi 21, which is what it is actually built and tested against.
+- Renamed the "Items to show for local/random lists" setting to "Items shown on seasonal
+  lists", and rewrote its description to name the seven lists it actually applies to. The
+  old wording read as though it capped the lists sourced from your local library, which it
+  has never done -- it only ever governed the seasonal shelves and custom local:// lists.
+- Random Movies and Random Shows now return 10 items rather than 50.
+
 v2.5.0 (2026-08-26)
 - BREAKING -- widget URLs have changed. Lists are now addressed as ?list=<name> and
   actions as ?mode=<name>. The old ?key=<name> has been REMOVED rather than kept as an

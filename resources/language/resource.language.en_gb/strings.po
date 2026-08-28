@@ -10,7 +10,7 @@ msgid "MDBList"
 msgstr ""
 
 msgctxt "#32001"
-msgid "Lists"
+msgid "Custom Lists"
 msgstr ""
 
 msgctxt "#32002"
@@ -66,11 +66,11 @@ msgid "How long a fetched list is cached before this addon asks mdblist.com for 
 msgstr ""
 
 msgctxt "#32015"
-msgid "Items to show for local/random lists"
+msgid "Items shown on seasonal lists"
 msgstr ""
 
 msgctxt "#32016"
-msgid "How many items to pull for lists sourced from your local library (local://...) and for windowed/seasonal lists that shuffle their order."
+msgid "How many items each seasonal list shows: Christmas, Valentine's Day, May the 4th, Star Trek Day, Halloween, Nick November and Friday the 13th, plus any custom list whose URL starts with local://. These reshuffle on every refresh, so this sets the size of the random selection rather than a limit on how much you can browse. It does not affect the Library Lists (All Movies, All Shows, New Movies and so on), the MDBList lists or Want to Watch, which are uncapped or carry their own limit."
 msgstr ""
 
 msgctxt "#32017"
@@ -115,4 +115,136 @@ msgstr ""
 
 msgctxt "#32027"
 msgid "Logs every list item this addon tries to match against your local library, both hits and misses, along with the imdb/tmdb/tvdb ids it matched on. Off by default -- noisy, only useful when diagnosing why something isn't matching."
+msgstr ""
+
+msgctxt "#32028"
+msgid "Show this list. Turn it off to hide it from the widget picker and the addon's own menu. Seasonal entries that are switched off are also skipped by the combined Seasonals widget, so it rotates on to the next active holiday instead."
+msgstr ""
+
+msgctxt "#32029"
+msgid "Built-in Lists"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Seasonals"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Library Lists"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Want to Watch Movies"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Want to Watch Shows"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Trending Movies"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Star Wars (Chronological Order)"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Marvel Cinematic Universe: The Sacred Timeline"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Best Picture Winners"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Trending Shows"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Christmas"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Valentine's Day"
+msgstr ""
+
+msgctxt "#32041"
+msgid "May the 4th"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Star Trek Day"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Halloween"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Nick November"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Friday the 13th"
+msgstr ""
+
+msgctxt "#32046"
+msgid "All Movies"
+msgstr ""
+
+msgctxt "#32047"
+msgid "All Shows"
+msgstr ""
+
+msgctxt "#32050"
+msgid "New Movies"
+msgstr ""
+
+msgctxt "#32051"
+msgid "New Shows"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Random Movies"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Random Shows"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Top Rated Movies"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Top Rated Shows"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Active from 7 December to 7 January (wrapping over the new year). Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
+msgstr ""
+
+msgctxt "#32057"
+msgid "Active from 7 to 14 February. Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
+msgstr ""
+
+msgctxt "#32058"
+msgid "Active from 1 to 7 May. Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
+msgstr ""
+
+msgctxt "#32059"
+msgid "Active from 5 to 12 September. Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
+msgstr ""
+
+msgctxt "#32060"
+msgid "Active from 1 October to 1 November. Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
+msgstr ""
+
+msgctxt "#32061"
+msgid "Active from 1 to 30 November. Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
+msgstr ""
+
+msgctxt "#32062"
+msgid "Active only on a Friday the 13th. Turn it off to hide it from the widget picker and to skip it in the combined Seasonals widget, which then rotates on to the next active entry."
 msgstr ""

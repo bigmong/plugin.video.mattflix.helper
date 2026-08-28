@@ -1,34 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.5.0" provider-name="bigmong">
+<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.0" provider-name="bigmong">
     <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
+        <!-- 3.0.1 = Kodi 21 Omega. The real floor is Kodi 20 (InfoTagVideo setters,
+             xbmc.Actor, ListItem.setIsFolder), but no xbmc.python version expresses
+             that, and declaring 3.0.0 lets Kodi 19 install something that then throws. -->
+        <import addon="xbmc.python" version="3.0.1"/>
         <import addon="script.module.requests" version="2.22.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">Curated movie/show widgets for Arctic Fuse, sourced from MDBList, Jellyfin favourites or your local library</summary>
+        <summary lang="en_GB">Library, MDBList, Jellyfin "Want to Watch" and seasonal widgets for Arctic Fuse, all resolved live against your local Kodi library</summary>
         <description lang="en_GB">
-            Live-resolves curated lists against your local Kodi library via JSON-RPC and
-            exposes each one as its own independently-addressable widget: exact-ordered
-            lists (Trending Movies, MCU chronological order, Star Wars order, Best Picture
-            Winners), a Trending Shows widget, "Want to Watch Movies" and "Want to Watch
-            Shows" built from your Jellyfin favourites, and date-windowed ones (Christmas,
-            Halloween, Valentine's Day, May the 4th, Star Trek Day, Nick November, Friday
-            the 13th) that return empty outside their window so the skin's auto-hide takes
-            care of showing/hiding them. Watched status, resume points and episode counts
-            come through from your library, so widget items look the same as the ones in
-            Kodi's own views. The Want to Watch widgets need no API key and no setup --
-            they reuse the login your Jellyfin addon already stores on that box. New lists
-            can be added from the addon's own settings screen (label, type, URL, optional
-            window) without redeploying, and no external cron job or file share is
-            required.
+            Every widget this addon provides is resolved live against your own Kodi library
+            via JSON-RPC, which is what lets its items look exactly like the ones in Kodi's
+            native views: watched ticks, resume progress, episode counts and collection
+            folders all come through, none of which a plugin widget normally carries.
+
+            Four kinds of list, each independently addressable so a skin can point a shelf
+            straight at it. [B]Library lists[/B] -- All, New, Random and Top Rated, for both
+            movies and shows -- run as live library queries rather than smart playlists.
+            [B]MDBList lists[/B] resolve a curated list against what you actually own,
+            keeping its exact order: Trending Movies and Shows, the MCU in chronological
+            order, Star Wars in chronological order, Best Picture winners. [B]"Want to Watch
+            Movies" and "Want to Watch Shows"[/B] are built from your Jellyfin favourites --
+            heart something in any Jellyfin client and it turns up here, with no API key and
+            no setup, because it reuses the login your Jellyfin addon already stores on that
+            box. [B]Seasonal lists[/B] (Christmas, Halloween, Valentine's Day, May the 4th,
+            Star Trek Day, Nick November, Friday the 13th) return empty outside their window
+            so the skin's auto-hide shows and hides them for you.
+
+            Anything on your Want to Watch queue is starred wherever else it appears, using
+            the favourite indicator your skin already has. Every built-in list can be
+            switched off individually, and new lists can be added from the addon's own
+            settings (label, type, URL, optional window) without redeploying. No external
+            cron job and no file share required.
         </description>
         <platform>all</platform>
         <license>MIT</license>
         <source>https://github.com/bigmong/plugin.video.mattflix.helper</source>
-        <news>v2.5.0 (2026-08-26)
+        <assets>
+            <icon>icon.jpg</icon>
+        </assets>
+        <news>v2.6.0 (2026-08-28)
+- Added built-in Library Lists (All/New/Random/Top Rated Movies and Shows), rendered by
+  this addon so they carry watched status, resume points and the Want to Watch star.
+- Movie collections now group into a single entry, the way Kodi's own Movies node does.
+- The Want to Watch star now appears on every widget, not just its own.
+- Every built-in list has its own on/off toggle, and the addon's menu is grouped by source.
+- Much faster widget refreshes: widgets read the whole library once instead of twice,
+  and library lists now read it just once in total.
+- Fixed: a failed MDBList fetch no longer blanks a widget for the cache duration.
+- Fixed: a failed Jellyfin call no longer suppresses the Want to Watch star.
+
+v2.5.0 (2026-08-26)
 - BREAKING: widget URLs changed. Lists are now ?list=&lt;name&gt; and actions ?mode=&lt;name&gt;.
   The old ?key=&lt;name&gt; is removed, so any widget using it must be repointed to ?list=.
 - Added "Want to Watch Movies" and "Want to Watch Shows", built from your Jellyfin

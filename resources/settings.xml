@@ -28,7 +28,128 @@
                 </setting>
             </group>
         </category>
-
+        <category id="builtin_lists" label="32029">
+            <group id="1">
+                <setting id="list_want_to_watch_movies" type="boolean" label="32032" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="list_want_to_watch_shows" type="boolean" label="32033" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="list_trending_movies" type="boolean" label="32034" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="list_star_wars_chronological_order" type="boolean" label="32035" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="list_marvel_cinematic_universe_the_sacred_timeline" type="boolean" label="32036" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="list_best_picture_winners" type="boolean" label="32037" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="list_trending_shows" type="boolean" label="32038" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="library" label="32031">
+            <group id="1">
+                <setting id="library_all_movies" type="boolean" label="32046" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_all_shows" type="boolean" label="32047" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_new_movies" type="boolean" label="32050" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_new_shows" type="boolean" label="32051" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_random_movies" type="boolean" label="32052" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_random_shows" type="boolean" label="32053" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_top_rated_movies" type="boolean" label="32054" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_top_rated_shows" type="boolean" label="32055" help="32028">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
+        <category id="seasonals" label="32030">
+            <group id="1">
+                <setting id="seasonal_christmas" type="boolean" label="32039" help="32056">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="seasonal_valentines_day" type="boolean" label="32040" help="32057">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="seasonal_may_the_4th" type="boolean" label="32041" help="32058">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="seasonal_star_trek_day" type="boolean" label="32042" help="32059">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="seasonal_halloween" type="boolean" label="32043" help="32060">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="seasonal_nick_november" type="boolean" label="32044" help="32061">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="seasonal_friday_the_13th" type="boolean" label="32045" help="32062">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+            </group>
+        </category>
         <category id="lists" label="32001">
             <group id="1" label="32002">
                 <setting id="local_list_item_limit" type="integer" label="32015" help="32016">
@@ -333,7 +454,6 @@
                 </setting>
             </group>
         </category>
-
         <category id="advanced" label="32025">
             <group id="1">
                 <setting id="debug_logging" type="boolean" label="32026" help="32027">

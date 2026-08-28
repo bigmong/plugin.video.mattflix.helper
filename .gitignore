@@ -4,6 +4,16 @@
 secrets/
 *.log
 __pycache__/
+.pytest_cache/
+.venv/
+venv/
+
+# The pytest suite is kept local, not committed -- so it never has to be excluded
+# from the published addon zip. It lives at tests/ and runs with `python -m pytest`
+# from this directory; see homelab-iac/notes/want_to_watch_plan.md for what it covers.
+# Nothing in the addon depends on it, but it is NOT recreated by a fresh clone.
+tests/
+pytest.ini
 
 # Local design notes and plans for this repo live in
 # homelab-iac/notes/ (gitignored there) -- see notes/README.md.
