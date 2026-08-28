@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.0" provider-name="bigmong">
+<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.1" provider-name="bigmong">
     <requires>
         <!-- 3.0.1 = Kodi 21 Omega. The real floor is Kodi 20 (InfoTagVideo setters,
              xbmc.Actor, ListItem.setIsFolder), but no xbmc.python version expresses
@@ -43,7 +43,12 @@
         <assets>
             <icon>icon.jpg</icon>
         </assets>
-        <news>v2.6.0 (2026-08-28)
+        <news>v2.6.1 (2026-08-28)
+- Fixed: widget items showed no release date -- the "premiered" field was never set.
+- Fixed: shows showed no certificate; "mpaa" was missing from the show path.
+- Moved the seasonal items setting into the Seasonals category.
+
+v2.6.0 (2026-08-28)
 - Added built-in Library Lists (All/New/Random/Top Rated Movies and Shows), rendered by
   this addon so they carry watched status, resume points and the Want to Watch star.
 - Movie collections now group into a single entry, the way Kodi's own Movies node does.
@@ -61,13 +66,6 @@ v2.5.0 (2026-08-26)
   favourites. No API key or setup needed -- it reuses your Jellyfin addon's login.
 - Fixed: watched status, resume points and episode counts now show on widget items.
 - Fixed: the watched-progress pie now appears on part-watched shows.
-
-v2.0.9 (2026-08-16)
-- Version bump only; no functional changes.
-
-v2.0.8 (2026-08-15)
-- List URLs now accept ?limit=N, capping the number of matched results.
-- Tidied up list rendering.
         </news>
     </extension>
 </addon>

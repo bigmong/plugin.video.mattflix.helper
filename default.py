@@ -45,6 +45,7 @@ MOVIE_PROPERTIES = [
     "art",
     "plot",
     "year",
+    "premiered",
     "genre",
     "rating",
     "runtime",
@@ -64,8 +65,10 @@ TVSHOW_PROPERTIES = [
     "art",
     "plot",
     "year",
+    "premiered",
     "genre",
     "rating",
+    "mpaa",
     "playcount",
     "lastplayed",
     "episode",
@@ -187,6 +190,7 @@ def _movie_info(movie: dict) -> dict:
         "art": movie.get("art", {}),
         "plot": movie.get("plot", ""),
         "year": movie.get("year", 0),
+        "premiered": movie.get("premiered", ""),
         "genre": movie.get("genre", []),
         "rating": movie.get("rating", 0),
         "runtime": movie.get("runtime", 0),
@@ -252,8 +256,10 @@ def _tvshow_info(show: dict) -> dict:
         "art": show.get("art", {}),
         "plot": show.get("plot", ""),
         "year": show.get("year", 0),
+        "premiered": show.get("premiered", ""),
         "genre": show.get("genre", []),
         "rating": show.get("rating", 0),
+        "mpaa": show.get("mpaa", ""),
         "playcount": show.get("playcount", 0),
         "lastplayed": show.get("lastplayed", ""),
         "episode": show.get("episode", 0),
@@ -428,8 +434,15 @@ def add_movie_items(matched: list[dict], badge: bool = True) -> None:
         # Without this, ListItem.DBID is empty on every item in this widget: the keymap
         # toggle can't identify what's focused, and the skin can't tell it's a library item.
         vtag.setDbId(info["kodi_id"])
+        # Year alone is not enough for the skin. Verified against the box over JSON-RPC:
+        # our items already carried a correct year (and rating), yet Arctic Fuse showed
+        # neither -- the only field differing from a native library item was premiered,
+        # which Kodi populates on everything it builds itself and we never set. Setting
+        # year as well because an item with no premiered date still has to show one.
         if info.get("year"):
             vtag.setYear(info["year"])
+        if info.get("premiered"):
+            vtag.setPremiered(info["premiered"])
         if info.get("plot"):
             vtag.setPlot(info["plot"])
         if info.get("genre"):
@@ -498,14 +511,25 @@ def add_tvshow_items(matched: list[dict], badge: bool = True) -> None:
         vtag.setTitle(info["title"])
         vtag.setMediaType("tvshow")
         vtag.setDbId(info["kodi_id"])  # see add_movie_items
+        # Year alone is not enough for the skin. Verified against the box over JSON-RPC:
+        # our items already carried a correct year (and rating), yet Arctic Fuse showed
+        # neither -- the only field differing from a native library item was premiered,
+        # which Kodi populates on everything it builds itself and we never set. Setting
+        # year as well because an item with no premiered date still has to show one.
         if info.get("year"):
             vtag.setYear(info["year"])
+        if info.get("premiered"):
+            vtag.setPremiered(info["premiered"])
         if info.get("plot"):
             vtag.setPlot(info["plot"])
         if info.get("genre"):
             vtag.setGenres(info["genre"])
         if info.get("rating"):
             vtag.setRating(info["rating"])
+        # Shows carry a certificate just as movies do; this was simply never requested or
+        # set on the show path, so the skin had nothing to draw.
+        if info.get("mpaa"):
+            vtag.setMpaa(info["mpaa"])
         # A show counts as watched only once every episode is. Kodi's own tvshow playcount
         # is the watched-episode count rather than a 0/1 flag, so deriving it here keeps
         # the overlay matching what the real library listing shows.

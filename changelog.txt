@@ -1,3 +1,13 @@
+v2.6.1 (2026-08-28)
+- Fixed: widget items showed no release date. Movies and shows both carried a correct
+  year, but the skin draws the date from the "premiered" field, which this addon never
+  asked the library for and so could never set. Widget items now show the same date, in
+  the same format, as the ones in Kodi's own views.
+- Fixed: shows showed no certificate. The rating field was being set correctly all along;
+  it was "mpaa" that was missing, and only on the show path -- movies have always had it.
+- Moved the "Items shown on seasonal lists" setting out of Custom Lists and into the
+  Seasonals category, where the lists it governs are.
+
 v2.6.0 (2026-08-28)
 - Added built-in Library Lists: All Movies, All Shows, New Movies, New Shows, Random
   Movies, Random Shows, Top Rated Movies and Top Rated Shows, each addressable as

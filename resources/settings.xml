@@ -112,7 +112,21 @@
             </group>
         </category>
         <category id="seasonals" label="32030">
-            <group id="1">
+            <group id="1" label="32002">
+                <setting id="local_list_item_limit" type="integer" label="32015" help="32016">
+                    <level>0</level>
+                    <default>10</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <step>1</step>
+                        <maximum>50</maximum>
+                    </constraints>
+                    <control type="slider" format="integer">
+                        <popup>true</popup>
+                    </control>
+                </setting>
+            </group>
+            <group id="2">
                 <setting id="seasonal_christmas" type="boolean" label="32039" help="32056">
                     <level>0</level>
                     <default>true</default>
@@ -151,22 +165,7 @@
             </group>
         </category>
         <category id="lists" label="32001">
-            <group id="1" label="32002">
-                <setting id="local_list_item_limit" type="integer" label="32015" help="32016">
-                    <level>0</level>
-                    <default>10</default>
-                    <constraints>
-                        <minimum>1</minimum>
-                        <step>1</step>
-                        <maximum>50</maximum>
-                    </constraints>
-                    <control type="slider" format="integer">
-                        <popup>true</popup>
-                    </control>
-                </setting>
-            </group>
-
-            <group id="2" label="32003">
+            <group id="1" label="32003">
                 <setting id="custom_list_1_label" type="string" label="32017" help="32018">
                     <level>0</level>
                     <default/>
