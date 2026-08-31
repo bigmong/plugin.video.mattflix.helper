@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.2" provider-name="bigmong">
+<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.3" provider-name="bigmong">
     <requires>
         <!-- 3.0.1 = Kodi 21 Omega. The real floor is Kodi 20 (InfoTagVideo setters,
              xbmc.Actor, ListItem.setIsFolder), but no xbmc.python version expresses
@@ -43,24 +43,18 @@
         <assets>
             <icon>icon.jpg</icon>
         </assets>
-        <news>v2.6.2 (2026-08-28)
+        <news>v2.6.3 (2026-09-01)
+- Much faster widget refreshes, and far less memory used while they run: a widget no longer
+  reads every field of your whole library -- cast lists, plots and artwork for thousands of
+  films -- just to show a handful of items.
+
+v2.6.2 (2026-08-28)
 - Fixed: movie collections showed artwork but no text -- no year or plot was set.
 
 v2.6.1 (2026-08-28)
 - Fixed: widget items showed no release date -- the "premiered" field was never set.
 - Fixed: shows showed no certificate; "mpaa" was missing from the show path.
 - Moved the seasonal items setting into the Seasonals category.
-
-v2.6.0 (2026-08-28)
-- Added built-in Library Lists (All/New/Random/Top Rated Movies and Shows), rendered by
-  this addon so they carry watched status, resume points and the Want to Watch star.
-- Movie collections now group into a single entry, the way Kodi's own Movies node does.
-- The Want to Watch star now appears on every widget, not just its own.
-- Every built-in list has its own on/off toggle, and the addon's menu is grouped by source.
-- Much faster widget refreshes: widgets read the whole library once instead of twice,
-  and library lists now read it just once in total.
-- Fixed: a failed MDBList fetch no longer blanks a widget for the cache duration.
-- Fixed: a failed Jellyfin call no longer suppresses the Want to Watch star.
 
         </news>
     </extension>

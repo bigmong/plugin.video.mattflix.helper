@@ -75,6 +75,14 @@ TVSHOW_PROPERTIES = [
     "watchedepisodes",
 ]
 
+# The provider index only has to turn an imdb/tmdb/tvdb id into a dbid, so it asks for the
+# three fields that do that and nothing else. The full sets above carry the unbounded fields
+# -- "cast" is a list of dicts per film, "plot" a paragraph, "art" a dict of URLs -- and a
+# widget renders at most a few dozen of the thousands of rows it indexes. So those are
+# fetched afterwards, for the matched rows only: see hydrate_movie_infos().
+MOVIE_INDEX_PROPERTIES = ["title", "imdbnumber", "uniqueid"]
+TVSHOW_INDEX_PROPERTIES = ["title", "imdbnumber", "uniqueid"]
+
 
 def log(message: str) -> None:
     xbmc.log(f"[{ADDON_ID}] {message}", level=xbmc.LOGINFO)
@@ -235,9 +243,14 @@ def _index_provider_ids(record: dict, info: dict, imdb_index: dict, tmdb_index: 
 
 
 def build_movie_provider_index() -> tuple[dict[str, dict], dict[str, dict]]:
-    """Index the local movie library by imdb id and tmdb id -> item info."""
+    """Index the local movie library by imdb id and tmdb id -> a lean item info.
+
+    Lean because every row here is a row that might not be rendered: the values carry the
+    dbid and the provider ids, and hydrate_movie_infos() fills in the rest for the handful
+    that survive matching.
+    """
     def build():
-        movies = _jsonrpc("VideoLibrary.GetMovies", {"properties": MOVIE_PROPERTIES}).get("movies", [])
+        movies = _jsonrpc("VideoLibrary.GetMovies", {"properties": MOVIE_INDEX_PROPERTIES}).get("movies", [])
         log(f"Local movie library index: {len(movies)} movies found")
         imdb_index: dict[str, dict] = {}
         tmdb_index: dict[str, dict] = {}
@@ -268,14 +281,17 @@ def _tvshow_info(show: dict) -> dict:
 
 
 def build_tvshow_provider_index() -> tuple[dict[str, dict], dict[str, dict], dict[str, dict]]:
-    """Index the local TV show library by imdb id, tmdb id, and tvdb id -> item info.
+    """Index the local TV show library by imdb id, tmdb id, and tvdb id -> a lean item info.
+
+    Lean for the same reason as the movie index; hydrate_tvshow_infos() completes the rows
+    that get rendered.
 
     Unlike movies, a lot of TV libraries are scraped with only a TheTVDB uniqueid set (no
     imdb/tmdb linkage at all) -- imdbnumber can even hold a raw TVDB number in that case,
     not a real "tt..." id. So tvdb has to be a first-class index here, not an afterthought.
     """
     def build():
-        shows = _jsonrpc("VideoLibrary.GetTVShows", {"properties": TVSHOW_PROPERTIES}).get("tvshows", [])
+        shows = _jsonrpc("VideoLibrary.GetTVShows", {"properties": TVSHOW_INDEX_PROPERTIES}).get("tvshows", [])
         log(f"Local TV show library index: {len(shows)} shows found")
         imdb_index: dict[str, dict] = {}
         tmdb_index: dict[str, dict] = {}
@@ -318,14 +334,70 @@ def match_mdblist_items(
     return matched
 
 
+# -----------------------------------------------------------------------------
+# Hydration: the second half of the lean-index trade.
+#
+# A widget indexes the whole library (thousands of rows) to render tens of them. Asking
+# JSON-RPC for art/plot/cast/resume across every row was the single most expensive thing a
+# refresh did -- Kodi serialises it, Python parses it, then _movie_info re-boxes it, so
+# three copies of a full cast list per film are live at once for rows that were never going
+# to be shown. These fetch the heavy fields per matched row instead, AFTER the cap has been
+# applied, which is why every call site hydrates last.
+#
+# One JSON-RPC call per row looks worse than one call for everything and is not: each is an
+# indexed single-row lookup, and there are at most a few dozen of them.
+# -----------------------------------------------------------------------------
+def _hydrate(infos: list[dict], method: str, id_key: str, result_key: str, properties: list[str],
+             to_info) -> list[dict]:
+    hydrated = []
+    for info in infos:
+        kodi_id = info.get("kodi_id")
+        # is_set entries are built by group_movies_into_sets, never by the index, and have
+        # no row to fetch. Nothing reaches here that way today, but passing them through
+        # unchanged costs a line and keeps this safe to call on any rendered list.
+        if not kodi_id or info.get("is_set"):
+            hydrated.append(info)
+            continue
+        details = _jsonrpc(method, {id_key: kodi_id, "properties": properties}).get(result_key) or {}
+        if not details:
+            # Deleted between the index and the render, or an error already notified by
+            # _jsonrpc. A lean item still draws a title and a dbid, which beats a hole in
+            # the shelf.
+            hydrated.append(info)
+            continue
+        # GetXDetails does echo the id back, but the id we matched on is the one that must
+        # end up on the ListItem -- don't make the render depend on the echo.
+        details[id_key] = kodi_id
+        hydrated.append(to_info(details))
+    return hydrated
+
+
+def hydrate_movie_infos(infos: list[dict]) -> list[dict]:
+    """Refetch the full property set for the movies that are actually being rendered."""
+    return _hydrate(infos, "VideoLibrary.GetMovieDetails", "movieid", "moviedetails",
+                    MOVIE_PROPERTIES, _movie_info)
+
+
+def hydrate_tvshow_infos(infos: list[dict]) -> list[dict]:
+    """Refetch the full property set for the shows that are actually being rendered."""
+    return _hydrate(infos, "VideoLibrary.GetTVShowDetails", "tvshowid", "tvshowdetails",
+                    TVSHOW_PROPERTIES, _tvshow_info)
+
+
 def query_local_movies_by_filter(field: str, value: str, limit: int) -> list[dict]:
+    """A seasonal's random sample: every matching film is fetched, ten are shown.
+
+    Lean then hydrate for the same reason as the provider index -- a "Christmas" tag can
+    match hundreds of films and the sample keeps ten of them.
+    """
     result = _jsonrpc(
         "VideoLibrary.GetMovies",
-        {"properties": MOVIE_PROPERTIES, "filter": {"field": field, "operator": "contains", "value": [value]}},
+        {"properties": MOVIE_INDEX_PROPERTIES,
+         "filter": {"field": field, "operator": "contains", "value": [value]}},
     )
     movies = result.get("movies", [])
     sample = random.sample(movies, min(limit, len(movies)))
-    return [_movie_info(m) for m in sample]
+    return hydrate_movie_infos([_movie_info(m) for m in sample])
 
 
 def group_movies_into_sets(movies: list[dict]) -> list[dict]:
@@ -698,9 +770,9 @@ def render_jellyfin_list(list_cfg: dict) -> None:
     log(f"'{list_cfg['label']}': {len(raw_items)} favourite(s) -> {len(matched)} matched locally")
 
     if is_shows:
-        add_tvshow_items(matched, badge=False)
+        add_tvshow_items(hydrate_tvshow_infos(matched), badge=False)
     else:
-        add_movie_items(matched, badge=False)
+        add_movie_items(hydrate_movie_infos(matched), badge=False)
 
 
 # Arctic Fuse draws its favourite badge purely on "is this ListItem property non-empty"
@@ -898,7 +970,7 @@ def render_list(list_cfg: dict, ignore_window: bool = False) -> None:
             matched = random.sample(matched, min(seasonal_limit, len(matched)))
         elif list_limit is not None:
             matched = matched[:list_limit]
-        add_tvshow_items(matched)
+        add_tvshow_items(hydrate_tvshow_infos(matched))
     else:
         imdb_index, tmdb_index = build_movie_provider_index()
         matched = match_mdblist_items(raw_items, imdb_index, tmdb_index)
@@ -906,7 +978,7 @@ def render_list(list_cfg: dict, ignore_window: bool = False) -> None:
             matched = random.sample(matched, min(seasonal_limit, len(matched)))
         elif list_limit is not None:
             matched = matched[:list_limit]
-        add_movie_items(matched)
+        add_movie_items(hydrate_movie_infos(matched))
 
     log(f"Matched {len(matched)} items locally for '{list_cfg['label']}'")
 

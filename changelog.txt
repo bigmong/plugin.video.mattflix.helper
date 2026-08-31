@@ -1,3 +1,14 @@
+v2.6.3 (2026-09-01)
+- Much faster widget refreshes, and far less memory used while they run. Every widget that
+  resolves a list against your library -- the MDBList lists, both Want to Watch lists and
+  the seasonals -- reads the whole library to find the handful of items it is going to
+  show, and it was asking for every field those items could ever need: cast lists, plots
+  and artwork for thousands of films, in order to draw twenty. It now reads only the ids it
+  needs to match on, then fetches the full details for the items it actually shows. With a
+  large library and several widgets refreshing at once, the old behaviour was enough to
+  starve the box -- stuttering audio, a home screen that took seconds to draw, and in the
+  worst case a Kodi that had to be restarted.
+
 v2.6.2 (2026-08-28)
 - Fixed: movie collections showed their artwork but no text. A collection built by Kodi
   carries a year (that of its most recent entry) and a plot; the ones this addon built
