@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.3" provider-name="bigmong">
+<addon id="plugin.video.mattflix.helper" name="MattFlix Helper" version="2.6.4" provider-name="bigmong">
     <requires>
         <!-- 3.0.1 = Kodi 21 Omega. The real floor is Kodi 20 (InfoTagVideo setters,
              xbmc.Actor, ListItem.setIsFolder), but no xbmc.python version expresses
@@ -43,18 +43,17 @@
         <assets>
             <icon>icon.jpg</icon>
         </assets>
-        <news>v2.6.3 (2026-09-01)
+        <news>v2.6.4 (2026-09-12)
+- Fixed: movies failed to play from a widget's "More..." listing -- items carried no file
+  path, which is what Kodi's Videos window plays.
+
+v2.6.3 (2026-09-01)
 - Much faster widget refreshes, and far less memory used while they run: a widget no longer
   reads every field of your whole library -- cast lists, plots and artwork for thousands of
   films -- just to show a handful of items.
 
 v2.6.2 (2026-08-28)
 - Fixed: movie collections showed artwork but no text -- no year or plot was set.
-
-v2.6.1 (2026-08-28)
-- Fixed: widget items showed no release date -- the "premiered" field was never set.
-- Fixed: shows showed no certificate; "mpaa" was missing from the show path.
-- Moved the seasonal items setting into the Seasonals category.
 
         </news>
     </extension>

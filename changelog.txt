@@ -1,3 +1,11 @@
+v2.6.4 (2026-09-12)
+- Fixed: movies wouldn't play from a widget's full listing. Opening a shelf's "More..."
+  entry and choosing Play on a movie failed with an error, while the same movie played
+  fine straight from the home screen. Movie items never carried the library's file path,
+  and that path is exactly what Kodi's Videos window plays for a library item -- so it
+  was handed nothing to open. Shows were unaffected, since selecting one opens its
+  episodes rather than playing it.
+
 v2.6.3 (2026-09-01)
 - Much faster widget refreshes, and far less memory used while they run. Every widget that
   resolves a list against your library -- the MDBList lists, both Want to Watch lists and

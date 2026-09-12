@@ -57,6 +57,7 @@ MOVIE_PROPERTIES = [
     "resume",
     "set",
     "setid",
+    "file",
 ]
 TVSHOW_PROPERTIES = [
     "title",
@@ -210,6 +211,7 @@ def _movie_info(movie: dict) -> dict:
         "resume": movie.get("resume", {}),
         "set": movie.get("set", ""),
         "setid": movie.get("setid", 0),
+        "file": movie.get("file", ""),
     }
 
 
@@ -514,6 +516,13 @@ def add_movie_items(matched: list[dict], badge: bool = True) -> None:
         # Without this, ListItem.DBID is empty on every item in this widget: the keymap
         # toggle can't identify what's focused, and the skin can't tell it's a library item.
         vtag.setDbId(info["kodi_id"])
+        # The url below is videodb://, and for a videodb item Kodi plays the tag's file, not
+        # the url: CGUIWindowVideoBase::PlayItem swaps the path for m_strFileNameAndPath. A
+        # widget click plays the url and so worked without this; selecting the same movie in
+        # the skin's "More..." listing (the Videos window) handed the player an empty path.
+        # ListItem.FileNameAndPath reads the same field, so the skin's Play buttons need it too.
+        if info.get("file"):
+            vtag.setFilenameAndPath(info["file"])
         # Year alone is not enough for the skin. Verified against the box over JSON-RPC:
         # our items already carried a correct year (and rating), yet Arctic Fuse showed
         # neither -- the only field differing from a native library item was premiered,
